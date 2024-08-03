@@ -7,4 +7,7 @@ DATA_GENERATION_USER_TEMPLATE = """Generate comma delimited csv output with the 
 - Number of rows: 100
 - Number of columns: 5
 
-Output:"""
+Only include csv data in your response. Do not include any other information.
+I will start the csv with the first id field which you should build off of.
+
+Output: id,"""

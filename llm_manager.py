@@ -16,6 +16,7 @@ class LLMManager():
         self.client = OpenAI(api_key=openai_api_key)
 
     def call_llm(self, system_prompt: str, user_prompt: str, temperature: float) -> str:
+        print(f"Calling LLM with system prompt: {system_prompt}\n\nUser prompt: {user_prompt}")
         response: ChatCompletion = self.client.chat.completions.create(
             messages=[
                 {"role": "system", "content": system_prompt},
