@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "data-analysis-interview-tool"
+version = "0.1.0"
+description = ""
+authors = ["Mathew Wang"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-dotenv = "^1.0.1"
+openai = "^1.35.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
