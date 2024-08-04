@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Data Analysis Interviewer</title>
+</head>
+
+<body>
+
+    <h1>Inputs</h1>
+    
+    <form action="/greet" method="post">
+        <label for="company">Company (if well known) that you want to practice interviewing for:</label>
+        <input type="text" id="company" name="company">
+        <br>
+        <label for="description">Description of the dataset you want to practice analyzing:</label>
+        <input type="text" id="description" name="description" required>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    
+    {% if company and description and questions %}
+    
+    <div id="data_response">
+        <p>Company: {{ company }}</p>
+        <p>Dataset description: {{ description }}</p>
+        <p>Questions: {{ questions }}</p>
+    </div>
+    
+    <form action="/submit_code" method="post">
+        <label for="input_code">Write your code here to answer the questions:</label>
+        <textarea id="input_code" name="input_code" rows="10" cols="100" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% endif %}
+
+    {% if execution_result %}
+
+    <div id="execution_result">
+        <p>Execution result: {{ execution_result }}</p>
+
+    {% endif %}
+
+</body>
+</html>

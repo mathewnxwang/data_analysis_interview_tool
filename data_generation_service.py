@@ -13,6 +13,11 @@ class GenerationService():
     def __init__(self):
         self.llm_manager = LLMManager()
 
+    def generate_interview(self, company: str, description: str) -> pd.DataFrame:
+        dataset = self.generate_interview_data(company, description)
+        questions = self.generate_interview_questions(dataset)
+        return questions
+
     def generate_interview_data(self, company: str, description: str) -> str:
         data_generation_user_prompt = DATA_GENERATION_USER_TEMPLATE.format(company=company, description=description)
         dataset = self.llm_manager.call_llm(
@@ -36,8 +41,8 @@ class GenerationService():
         df = pd.read_csv(csv_data)
         return df
 
-generation_service = GenerationService()
-dataset = generation_service.generate_interview_data("Uber", "rides")
-print(dataset)
-questions = generation_service.generate_interview_questions(dataset)
-print(questions)
+# generation_service = GenerationService()
+# dataset = generation_service.generate_interview_data("Uber", "rides")
+# print(dataset)
+# questions = generation_service.generate_interview_questions(dataset)
+# print(questions)
