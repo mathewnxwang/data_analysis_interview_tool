@@ -20,20 +20,16 @@ Dataset:
 
 Output the questions in a Python list where each element is a question. Start your output with [".
 Do not include question indexes like "1." in your output.
-Output: 
-"""
+Output: """
 
-ANSWER_GENERATION_USER_TEMPLATE = """Generate answers to the following data analysis interview Questions based on the Dataset.
-Each answer should be executable Pandas Python code that starts with "df", where df refers to the Dataset.
+ANSWER_GENERATION_USER_TEMPLATE = """Generate an answer to the following data analysis interview Question based on the Dataset.
 
 Dataset:
 {dataset}
 
-Questions:
-1. {question_1}
-2. {question_2}
-3. {question_3}
+Question: {question}
 
-Output the answers in a Python list where each element is an answer. Start your output with [".
-Output: 
-"""
+The answer should be executable Pandas Python code where df refers to the Dataset above.
+Always start your answer with a comment explaining what the following code does.
+DO NOT DEFINE df IN YOUR RESPONSE.
+Answer: """

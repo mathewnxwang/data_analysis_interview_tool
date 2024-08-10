@@ -15,6 +15,7 @@ class InterviewAnswers(BaseModel):
 class AppInterviewData(BaseModel):
     dataset_context: str
     questions: InterviewQuestions
+    answers: InterviewAnswers
     dataset_df: DataFrame
 
     class Config:

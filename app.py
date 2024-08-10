@@ -28,6 +28,9 @@ def greet():
     session['question_1'] = interview_data.questions.question_1
     session['question_2'] = interview_data.questions.question_2
     session['question_3'] = interview_data.questions.question_3
+    session['answer_1'] = interview_data.answers.answer_1
+    session['answer_2'] = interview_data.answers.answer_2
+    session['answer_3'] = interview_data.answers.answer_3
 
     return render_template(
         'index.html',
@@ -35,7 +38,10 @@ def greet():
         description=description,
         question_1=interview_data.questions.question_1,
         question_2=interview_data.questions.question_2,
-        question_3=interview_data.questions.question_3
+        question_3=interview_data.questions.question_3,
+        answer_1=interview_data.answers.answer_1,
+        answer_2=interview_data.answers.answer_2,
+        answer_3=interview_data.answers.answer_3
     )
 
 @app.route('/submit_code', methods=['POST'])
@@ -53,6 +59,9 @@ def submit_code():
         question_1=session.get('question_1'),
         question_2=session.get('question_2'),
         question_3=session.get('question_3'),
+        answer_1=session.get('answer_1'),
+        answer_2=session.get('answer_2'),
+        answer_3=session.get('answer_3'),
         input_code=code,
         execution_result = execution_result
     )

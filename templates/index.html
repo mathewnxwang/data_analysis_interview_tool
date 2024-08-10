@@ -37,6 +37,20 @@
                 </ol>
             </div>
     
+        <h5>Answers</h5>
+
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#answers" aria-expanded="false" aria-controls="answers">
+                Show Answers
+            </button>
+
+            <div class="collapse mt-4" id="answers">
+                <ol>
+                    <li><pre class="bg-light p-3 rounded"><code>{{ answer_1 | safe}}</code></pre></li>
+                    <li><pre class="bg-light p-3 rounded"><code>{{ answer_2 | safe}}</code></pre></li>
+                    <li><pre class="bg-light p-3 rounded"><code>{{ answer_3 | safe}}</code></pre></li>
+                </ol>
+            </div>
+
         <h5>Code Execution</h5>
 
         <form action="/submit_code" method="post">

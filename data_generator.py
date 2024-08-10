@@ -1,4 +1,4 @@
-from ast import literal_eval
+from ast import literal_eval, parse
 from io import StringIO
 import pandas as pd
 
@@ -9,6 +9,7 @@ from prompts import (
     QUESTION_GENERATION_USER_TEMPLATE,
     ANSWER_GENERATION_USER_TEMPLATE
 )
+from code_executor import CodeExecutor
 from llm_manager import LLMManager
 from mock_data import MOCK_DATASET
 
@@ -23,10 +24,15 @@ class DataGenerator():
         )
         questions: InterviewQuestions = self.generate_interview_questions(dataset_context)
         dataset_df: pd.DataFrame = self.convert_str_to_df(dataset_context)
+        answers: InterviewAnswers = self.generate_interview_answers(
+            dataset_context=dataset_context,
+            dataset_df=dataset_df,
+            questions=questions)
 
         return AppInterviewData(
             dataset_context=dataset_context,
             questions=questions,
+            answers=answers,
             dataset_df=dataset_df
         )
 
@@ -80,23 +86,23 @@ class DataGenerator():
 
         return questions_structured
     
-    def generate_interview_answers(self, dataset: str, questions: InterviewQuestions) -> InterviewAnswers:
-        answer_generation_user_prompt = ANSWER_GENERATION_USER_TEMPLATE.format(
-            dataset=dataset,
-            question_1=questions.question_1,
-            question_2=questions.question_2,
-            question_3=questions.question_3
-        )
-        answers = self.llm_manager.call_llm(
-            system_prompt=SYSTEM_TEMPLATE,
-            user_prompt=answer_generation_user_prompt,
-            temperature=0
-        )
+    def generate_interview_answers(
+        self, dataset_context: str, dataset_df: pd.DataFrame, questions: InterviewQuestions
+    ) -> InterviewAnswers:
 
-        try:
-            answers_list = literal_eval(answers)
-        except Exception as e:
-            raise ValueError(f"Error in converting LLM answers output to list: {e}")
+        answers_list = []
+        for _, question in questions:
+            answer_generation_user_prompt = ANSWER_GENERATION_USER_TEMPLATE.format(
+                dataset=dataset_context, question=question
+            )
+
+            answer = self.llm_manager.call_llm(
+                system_prompt=SYSTEM_TEMPLATE,
+                user_prompt=answer_generation_user_prompt,
+                temperature=0
+            )
+            answer = self.clean_llm_answer_output(answer)
+            answers_list.append(answer)
         
         answers_structured = InterviewAnswers(
             answer_1=answers_list[0],
@@ -105,3 +111,7 @@ class DataGenerator():
         )
 
         return answers_structured
+
+    def clean_llm_answer_output(self, answer: str) -> str:
+        cleaned_answer = answer.replace("\n", '<br>')
+        return cleaned_answer
