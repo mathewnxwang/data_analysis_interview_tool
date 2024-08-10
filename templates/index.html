@@ -40,7 +40,7 @@
     {% if execution_result %}
 
     <div id="execution_result">
-        <p>Execution result: {{ execution_result }}</p>
+        <p>Execution result: {{ execution_result | safe }}</p>
 
     {% endif %}
 
