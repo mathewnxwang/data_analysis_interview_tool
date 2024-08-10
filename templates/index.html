@@ -9,24 +9,23 @@
 
 <body>
 
-    <h1>Inputs</h1>
+    <h1>Interview Config</h1>
     
     <form action="/greet" method="post">
         <label for="company">Company (if well known) that you want to practice interviewing for:</label>
-        <input type="text" id="company" name="company">
+        <input type="text" id="company" name="company" value="{{ company }}">
         <br>
         <label for="description">Description of the dataset you want to practice analyzing:</label>
-        <input type="text" id="description" name="description" required>
+        <input type="text" id="description" name="description" value="{{ description }}" required>
         <br>
         <button type="submit">Submit</button>
     </form>
     
     {% if company and description and question_1 and question_2 and question_3 %}
     
+    <h1>Questions</h1>
+
     <div id="data_response">
-        <p>Company: {{ company }}</p>
-        <p>Dataset description: {{ description }}</p>
-        <p>Questions:</p>
         <ol>
             <li>{{ question_1 }}</li>
             <li>{{ question_2 }}</li>
@@ -34,9 +33,17 @@
         </ol>
     </div>
     
+    <h1>Code Execution</h1>
+
     <form action="/submit_code" method="post">
-        <label for="input_code">Write your pandas code here to answer the questions. There is a single Pandas DataFrame called "df" in the environment. Click on the Submit button to execute the code:</label>
-        <textarea id="input_code" name="input_code" rows="10" cols="100" required></textarea>
+        <label for="input_code">
+            Write your pandas code here to answer the questions. There is a single Pandas DataFrame called "df" in the environment.
+            <br>
+            Click on the Submit button to execute the code:
+        </label>
+        <br>
+        <textarea id="input_code" name="input_code" rows="10" cols="100" required>{{ input_code }}</textarea>
+        <br>
         <button type="submit">Submit</button>
     </form>
 

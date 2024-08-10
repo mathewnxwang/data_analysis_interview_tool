@@ -63,9 +63,3 @@ class GenerationService():
             raise ValueError(f"Error in converting LLM csv output to DataFrame: {e}")
 
         return df
-
-# generation_service = GenerationService()
-# dataset = generation_service.generate_interview_data("Uber", "rides")
-# print(dataset)
-# questions = generation_service.generate_interview_questions(dataset)
-# print(questions)

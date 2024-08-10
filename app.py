@@ -52,7 +52,10 @@ def submit_code():
         'index.html',
         company = session.get('company'),
         description = session.get('description'),
-        questions = session.get('questions'),
+        question_1=session.get('question_1'),
+        question_2=session.get('question_2'),
+        question_3=session.get('question_3'),
+        input_code=code,
         execution_result = execution_result
     )
 
