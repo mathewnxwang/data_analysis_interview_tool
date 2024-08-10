@@ -1,5 +1,5 @@
 import pandas as pd
-from flask import Flask, request, render_template, session
+from flask import Flask, request, render_template
 
 from code_executor import CodeExecutor
 from data_generator import DataGenerator
@@ -33,7 +33,7 @@ class FlaskApp:
             description = request.form['description']
 
             interview_data: InterviewData = self.data_generator.generate_interview_app_data(
-                company=company, description=description, mock_data=True
+                company=company, description=description, mock_data=False
             )
             self.app_greet_data = AppGreetData(
                 company=company,
@@ -53,7 +53,7 @@ class FlaskApp:
         def submit_code():
             code = request.form['input_code']
             execution_result = self.code_executor.execute_code(
-                df=pd.read_json(session['df']), input_code=code
+                df=self.app_greet_data.interview_data.dataset_df, input_code=code
             )
 
             self.app_submit_code_data = AppSubmitCodeData(

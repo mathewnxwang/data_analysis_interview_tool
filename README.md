@@ -27,8 +27,8 @@ I built a simple front-end using Flask which can be run locally.
 
 * clone the repo locally
 * install `poetry`, a dependency/virtual environment manager
-* navigate to the repo directory and run `poetry install`
+* navigate to the repo directory and run `poetry install` to install dependencies
 * create or copy your OpenAI api key from https://platform.openai.com/api-keys
 * create a `secrets.env` file which should contain `OPENAI_API_KEY=<your OpenAI api key here>`
-* run the flask app with the command `python app.py`
-* go to http://127.0.0.1:5000 in your local browser and have fun!
+* run the flask app with the command `python app.py` in terminal
+* go to http://127.0.0.1:5000 in your local browser to interact with the app!
