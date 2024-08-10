@@ -1,6 +1,6 @@
 # Intro
 
-This repo contains the code to run a Flask app locally where you can practice with AI powered data analyst interviews.
+This repo contains the code to run a Flask app locally where you can practice writing Python Pandas code to solve AI powered data analyst interviews.
 
 ### Problem
 
@@ -12,13 +12,23 @@ Things may have changed since then, but it would have been nice to have an unlim
 
 ### LLM architecture
 
-There are 3 main LLM calls made:
-1. Dataset generation: we ask a LLM to generate a dataset suitable for a typical analytics interview based on some parameters provided by the user which can tailor the practice to a specific company and/or domain.
+I used OpenAI's `gpt-4o` as a starting default. There are 3 LLM calls made:
+1. Dataset generation: we ask a LLM to generate a dataset suitable for an analytics interview based on parameters provided by the user which tailor the practice to a specific company and/or domain.
 2. Question generation: we ask a LLM to generate a couple of analytics interview questions from that dataset.
-Since we want a diverse set of questions, we ask a LLM for all 3 questions in 1 call expecting that it won't create essentially redundant questions.
+Since we want a diverse set of questions, we ask a LLM for all 3 questions in 1 call expecting that it won't generate redundant questions.
 3. Answer generation: we ask a LLM to generate the answer code for each interview question.
-Since we want to maximize the ability of the LLM to produce an accurate answer, each LLM call focuses on generating the answer for a single question.
+Since we want to maximize the ability of the LLM to produce an accurate answer, we make 1 LLM call for each question to generate an answer.
+
+### Front-end
+
+I built a simple front-end using Flask which can be run locally.
 
 # How to run
 
-* 
+* clone the repo locally
+* install `poetry`, a dependency/virtual environment manager
+    * navigate to the repo directory and run `poetry install`
+* create a `secrets.env` file which should contain `OPENAI_API_KEY=<your OpenAI api key here>`
+    * create or copy your OpenAI api key from https://platform.openai.com/api-keys
+* run the flask app with the command `python app.py`
+* go to http://127.0.0.1:5000 in your local browser and have fun!
