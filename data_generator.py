@@ -11,7 +11,7 @@ from prompts import (
 from llm_manager import LLMManager
 from mock_data import MOCK_DATASET
 
-class GenerationService():
+class DataGenerator():
 
     def __init__(self):
         self.llm_manager = LLMManager()

@@ -2,7 +2,7 @@ import pandas as pd
 from flask import Flask, request, render_template, session
 
 from code_executor import CodeExecutor
-from data_generation_service import GenerationService
+from data_generator import DataGenerator
 from data_generator_resource import InterviewQuestions
 
 app = Flask(__name__)
@@ -17,12 +17,12 @@ def greet():
     company = request.form['company']
     description = request.form['description']
 
-    generation_service = GenerationService()
-    dataset_context: str = generation_service.generate_interview_data(
+    data_generator = DataGenerator()
+    dataset_context: str = data_generator.generate_interview_data(
         company=company, description=description, mock_data=True
     )
-    questions: InterviewQuestions = generation_service.generate_interview_questions(dataset_context)
-    dataset_df: pd.DataFrame = generation_service.convert_str_to_df(dataset_context)
+    questions: InterviewQuestions = data_generator.generate_interview_questions(dataset_context)
+    dataset_df: pd.DataFrame = data_generator.convert_str_to_df(dataset_context)
 
     session['company'] = company
     session['description'] = description
