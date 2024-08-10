@@ -19,6 +19,7 @@ Dataset:
 {dataset}
 
 Output the questions in a Python list where each element is a question. Start your output with [".
+Do not include question indexes like "1." in your output.
 Output: 
 """
 
