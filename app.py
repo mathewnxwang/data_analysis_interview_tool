@@ -10,7 +10,7 @@ app.secret_key = '1234'
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('base.html')
 
 @app.route('/greet', methods=['POST'])
 def greet():
@@ -33,7 +33,7 @@ def greet():
     session['answer_3'] = interview_data.answers.answer_3
 
     return render_template(
-        'index.html',
+        'base.html',
         company=company,
         description=description,
         question_1=interview_data.questions.question_1,
@@ -53,7 +53,7 @@ def submit_code():
     )
 
     return render_template(
-        'index.html',
+        'base.html',
         company = session.get('company'),
         description = session.get('description'),
         question_1=session.get('question_1'),
