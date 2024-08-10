@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, session
 
 from code_executor import CodeExecutor
 from data_generation_service import GenerationService
+from data_generator_resource import InterviewQuestions
 
 app = Flask(__name__)
 app.secret_key = '1234'
@@ -17,19 +18,25 @@ def greet():
     description = request.form['description']
 
     generation_service = GenerationService()
-    dataset: pd.DataFrame = generation_service.generate_interview_data(company, description)
-    questions: list[str] = generation_service.generate_interview_questions(dataset)
+    dataset: pd.DataFrame = generation_service.generate_interview_data(
+        company=company, description=description, mock_data=True
+    )
+    questions: InterviewQuestions = generation_service.generate_interview_questions(dataset)
 
     session['company'] = company
     session['description'] = description
     session['dataset'] = dataset
-    session['questions'] = questions
+    session['question_1'] = questions.question_1
+    session['question_2'] = questions.question_2
+    session['question_3'] = questions.question_3
 
     return render_template(
         'index.html',
         company=company,
         description=description,
-        questions=questions
+        question_1=questions.question_1,
+        question_2=questions.question_2,
+        question_3=questions.question_3
     )
 
 @app.route('/submit_code', methods=['POST'])
