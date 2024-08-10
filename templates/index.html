@@ -5,56 +5,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Data Analysis Interviewer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
 
-    <h1>Interview Config</h1>
-    
-    <form action="/greet" method="post">
-        <label for="company">Company (if well known) that you want to practice interviewing for:</label>
-        <input type="text" id="company" name="company" value="{{ company }}">
-        <br>
-        <label for="description">Description of the dataset you want to practice analyzing:</label>
-        <input type="text" id="description" name="description" value="{{ description }}" required>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
-    
-    {% if company and description and question_1 and question_2 and question_3 %}
-    
-    <h1>Questions</h1>
+    <div class="container mt-5">
 
-    <div id="data_response">
-        <ol>
-            <li>{{ question_1 }}</li>
-            <li>{{ question_2 }}</li>
-            <li>{{ question_3 }}</li>
-        </ol>
-    </div>
-    
-    <h1>Code Execution</h1>
-
-    <form action="/submit_code" method="post">
-        <label for="input_code">
-            Write your pandas code here to answer the questions. There is a single Pandas DataFrame called "df" in the environment.
+        <h1>AI Data Analysis Interviewer</h1>
+        <h5>Interview Config</h5>
+        
+        <form action="/greet" method="post">
+            <label for="company">Company (if well known) that you want to practice interviewing for:</label>
+            <input type="text" id="company" name="company" value="{{ company }}">
             <br>
-            Click on the Submit button to execute the code:
-        </label>
-        <br>
-        <textarea id="input_code" name="input_code" rows="10" cols="100" required>{{ input_code }}</textarea>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
+            <label for="description">Description of the dataset you want to practice analyzing:</label>
+            <input type="text" id="description" name="description" value="{{ description }}" required>
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+        {% if company and description and question_1 and question_2 and question_3 %}
+  
+        <h5>Questions</h5>
 
-    {% endif %}
+            <div class="mt-4">
+                <ol>
+                    <li>{{ question_1 }}</li>
+                    <li>{{ question_2 }}</li>
+                    <li>{{ question_3 }}</li>
+                </ol>
+            </div>
+    
+        <h5>Code Execution</h5>
 
-    {% if execution_result %}
+        <form action="/submit_code" method="post">
+            <label for="input_code">
+                Write your pandas code here to answer the questions. There is a single Pandas DataFrame called "df" in the environment.
+                <br>
+                Click on the Submit button to execute the code:
+            </label>
+            <br>
+            <textarea id="input_code" name="input_code" class="form-control" rows="10" required>{{ input_code }}</textarea>
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
 
-    <div id="execution_result">
-        <p>Execution result: {{ execution_result | safe }}</p>
+        {% endif %}
 
-    {% endif %}
+        {% if execution_result %}
 
+        <div id="execution_result" class="mt-4">
+            <p>Execution result: {{ execution_result | safe }}</p>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

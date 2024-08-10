@@ -3,7 +3,7 @@ from flask import Flask, request, render_template, session
 
 from code_executor import CodeExecutor
 from data_generator import DataGenerator
-from data_generator_resource import InterviewQuestions
+from object_resource import AppInterviewData
 
 app = Flask(__name__)
 app.secret_key = '1234'
@@ -18,26 +18,24 @@ def greet():
     description = request.form['description']
 
     data_generator = DataGenerator()
-    dataset_context: str = data_generator.generate_interview_data(
+    interview_data: AppInterviewData = data_generator.generate_interview_app_data(
         company=company, description=description, mock_data=True
     )
-    questions: InterviewQuestions = data_generator.generate_interview_questions(dataset_context)
-    dataset_df: pd.DataFrame = data_generator.convert_str_to_df(dataset_context)
 
     session['company'] = company
     session['description'] = description
-    session['df'] = dataset_df.to_json()
-    session['question_1'] = questions.question_1
-    session['question_2'] = questions.question_2
-    session['question_3'] = questions.question_3
+    session['df'] = interview_data.dataset_df.to_json()
+    session['question_1'] = interview_data.questions.question_1
+    session['question_2'] = interview_data.questions.question_2
+    session['question_3'] = interview_data.questions.question_3
 
     return render_template(
         'index.html',
         company=company,
         description=description,
-        question_1=questions.question_1,
-        question_2=questions.question_2,
-        question_3=questions.question_3
+        question_1=interview_data.questions.question_1,
+        question_2=interview_data.questions.question_2,
+        question_3=interview_data.questions.question_3
     )
 
 @app.route('/submit_code', methods=['POST'])

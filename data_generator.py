@@ -2,7 +2,7 @@ from ast import literal_eval
 from io import StringIO
 import pandas as pd
 
-from data_generator_resource import InterviewQuestions, InterviewAnswers
+from object_resource import InterviewQuestions, InterviewAnswers, AppInterviewData
 from prompts import (
     SYSTEM_TEMPLATE,
     DATA_GENERATION_USER_TEMPLATE,
@@ -17,7 +17,20 @@ class DataGenerator():
     def __init__(self):
         self.llm_manager = LLMManager()
 
-    def generate_interview_data(self, company: str, description: str, mock_data: bool) -> str:
+    def generate_interview_app_data(self, company: str, description: str, mock_data: bool) -> AppInterviewData:
+        dataset_context: str = self.generate_interview_dataset(
+            company=company, description=description, mock_data=mock_data
+        )
+        questions: InterviewQuestions = self.generate_interview_questions(dataset_context)
+        dataset_df: pd.DataFrame = self.convert_str_to_df(dataset_context)
+
+        return AppInterviewData(
+            dataset_context=dataset_context,
+            questions=questions,
+            dataset_df=dataset_df
+        )
+
+    def generate_interview_dataset(self, company: str, description: str, mock_data: bool) -> str:
         if not mock_data:
             data_generation_user_prompt = DATA_GENERATION_USER_TEMPLATE.format(company=company, description=description)
             dataset = self.llm_manager.call_llm(
