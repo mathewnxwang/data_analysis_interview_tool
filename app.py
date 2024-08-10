@@ -18,14 +18,15 @@ def greet():
     description = request.form['description']
 
     generation_service = GenerationService()
-    dataset: pd.DataFrame = generation_service.generate_interview_data(
+    dataset_context: str = generation_service.generate_interview_data(
         company=company, description=description, mock_data=True
     )
-    questions: InterviewQuestions = generation_service.generate_interview_questions(dataset)
+    questions: InterviewQuestions = generation_service.generate_interview_questions(dataset_context)
+    dataset_df: pd.DataFrame = generation_service.convert_str_to_df(dataset_context)
 
     session['company'] = company
     session['description'] = description
-    session['dataset'] = dataset
+    session['df'] = dataset_df.to_json()
     session['question_1'] = questions.question_1
     session['question_2'] = questions.question_2
     session['question_3'] = questions.question_3
@@ -43,7 +44,9 @@ def greet():
 def submit_code():
     code = request.form['input_code']
     code_executor = CodeExecutor()
-    execution_result = code_executor.execute_code(session['dataset'], code)
+    execution_result = code_executor.execute_code(
+        df=pd.read_json(session['df']), input_code=code
+    )
 
     return render_template(
         'index.html',

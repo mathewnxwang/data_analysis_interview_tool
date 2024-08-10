@@ -55,8 +55,13 @@ class GenerationService():
         return questions_structured
 
     def convert_str_to_df(self, dataset: str) -> pd.DataFrame:
-        csv_data = StringIO()
-        df = pd.read_csv(csv_data)
+        csv_data = StringIO(dataset)
+
+        try:
+            df = pd.read_csv(csv_data)
+        except Exception as e:
+            raise ValueError(f"Error in converting LLM csv output to DataFrame: {e}")
+
         return df
 
 # generation_service = GenerationService()
