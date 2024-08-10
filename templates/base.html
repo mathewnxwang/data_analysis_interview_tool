@@ -25,7 +25,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         
-        {% if company and description and question_1 and question_2 and question_3 %}
+        {% if config_submitted %}
   
         <h5>Questions</h5>
 
@@ -67,7 +67,7 @@
 
         {% endif %}
 
-        {% if execution_result %}
+        {% if code_submitted %}
 
         <div id="execution_result" class="mt-4">
             <p>Execution result: {{ execution_result | safe }}</p>

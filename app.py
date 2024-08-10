@@ -16,6 +16,10 @@ class FlaskApp:
 
         self.app_greet_data = None
         self.app_submit_code_data = None
+        self.submit_state = {
+            'config_submitted': False,
+            'code_submitted': False
+        }
 
     def setup_routes(self):
 
@@ -37,8 +41,12 @@ class FlaskApp:
                 interview_data=interview_data
             )
 
+            self.submit_state['config_submitted'] = True
+
             return render_template(
-                'base.html', **self.app_greet_data.unpack_into_dict()
+                'base.html',
+                **self.app_greet_data.unpack_into_dict(),
+                **self.submit_state
             )
 
         @self.app.route('/submit_code', methods=['POST'])
@@ -54,8 +62,12 @@ class FlaskApp:
                 execution_result=execution_result
             )
 
+            self.submit_state['code_submitted'] = True
+
             return render_template(
-                'base.html', **self.app_submit_code_data.unpack_into_dict()
+                'base.html',
+                **self.app_submit_code_data.unpack_into_dict(),
+                **self.submit_state
             )
 
 if __name__ == '__main__':
