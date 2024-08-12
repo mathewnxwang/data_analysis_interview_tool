@@ -11,8 +11,6 @@ class LLMManager():
 
         load_dotenv("secrets.env")
         openai_api_key = os.getenv("OPENAI_API_KEY")
-        print("openai_api_key should be defined and this should print before the error")
-        print(openai_api_key)
         self.client = OpenAI(api_key=openai_api_key)
 
     def call_llm(self, system_prompt: str, user_prompt: str, temperature: float) -> str:
